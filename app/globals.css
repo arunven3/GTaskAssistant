@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@plugin "flowbite-react/plugin/tailwindcss";
+@source "../.flowbite-react/class-list.json";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --loader-color: no-repeat linear-gradient(#fff 0 0);
+}
+
+body {
+  background: radial-gradient(
+    circle,
+    rgb(159 159 159) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+}
+
+.dark body {
+  background: radial-gradient(
+    circle,
+    rgba(30, 30, 60, 1) 0%,
+    rgba(5, 5, 20, 1) 100%
+  );
+}
