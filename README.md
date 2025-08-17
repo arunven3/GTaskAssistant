@@ -77,13 +77,13 @@ ollama list
 
 ## Setup Enviroinmnet variable
 
-| Task                     | Command                   |
-| ------------------------ | ------------------------- |
-| NEXT_PUBLIC_API_BASE_URL | http://localhost:3000     |
-| NEXT_PUBLIC_AI_NAME      | TaskAssistant             |
-| NEXTAUTH_SECRET          | your_nextauth_secret      |
-| GOOGLE_CLIENT_ID         | your_google_client_id     |
-| GOOGLE_CLIENT_SECRET     | your_google_client_secret |
+| **Variable Name**          | **Description / Example Value**                                              |
+| -------------------------- | ---------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_API_BASE_URL` | Base URL of your local Next.js server (e.g., `http://localhost:3000`)        |
+| `NEXT_PUBLIC_AI_NAME`      | The name of your AI assistant (e.g., `TaskAssistant`)                        |
+| `NEXTAUTH_SECRET`          | Secret key for NextAuth authentication (replace with a strong random string) |
+| `GOOGLE_CLIENT_ID`         | Your Google OAuth client ID for Calendar API                                 |
+| `GOOGLE_CLIENT_SECRET`     | Your Google OAuth client secret                                              |
 
 ## ⚙️ Project Setup
 
