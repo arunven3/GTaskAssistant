@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GTaskAssistant
 
-## Getting Started
+**GTaskAssistant** is an **Agentic AI** assistant built with **Next.js**, leveraging **LLaMA 3.2** and **Qwen2 1.5B** models connected via **Ollama**, and integrated with **Google APIs** for calendar and task management. It provides intelligent, friendly, and context-aware responses.
 
-First, run the development server:
+---
+
+## ScreenShot
+
+You can see a screenshot of GTaskAssistant below:
+
+![GTaskAssistant Screenshot](./public/Screenshot-1.png)
+
+![GTaskAssistant Screenshot](./public/Screenshot-2.png)
+
+## Features
+
+- AI-powered assistant using **LLaMA 3.2** and **Qwen2 1.5B**
+- Integrates **Google APIs** for calendar and scheduling
+- Generates **friendly summaries** for user requests
+- Supports **markdown formatting**
+- Built with **Next.js**
+- Easy to extend with new AI models or tools
+
+---
+
+## Tech Stack
+
+- **Frontend / Backend:** Next.js 15
+- **AI Models:** Ollama LLaMA 3.2, Qwen2 1.5B
+- **Authentication:** NextAuth
+- **Markdown Support:** react-markdown, rehype plugins
+- **Styling:** Tailwind CSS
+- **Code Quality:** ESLint, Prettier
+
+---
+
+## Prerequisites
+
+1. **Node.js** >= 20
+2. **npm** >= 10
+3. **Ollama CLI** installed on your system
+4. A **Google Cloud project** with OAuth credentials to access Google API
+
+---
+
+## Installing Ollama and AI Models
+
+**1. Install Ollama CLI**  
+ Follow the instructions for your OS from [Ollama Docs](https://ollama.com/docs/):
+
+- macOS:
+  ```bash
+  brew install ollama
+  ```
+- Linux:
+  ```bash
+  curl -fsSL https://ollama.com/install.sh | sh
+  ```
+- Windows:
+  Download installer: [https://ollama.com/download](https://ollama.com/download)
+
+**2. Download the AI models:**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+ollama pull llama3.2:3b
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```bash
+ollama pull qwen2:1.5b
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**3. Verify** the models are installed
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+ollama list
+```
 
-## Learn More
+## Setup Enviroinmnet variable
 
-To learn more about Next.js, take a look at the following resources:
+| Task                     | Command                   |
+| ------------------------ | ------------------------- |
+| NEXT_PUBLIC_API_BASE_URL | http://localhost:3000     |
+| NEXT_PUBLIC_AI_NAME      | TaskAssistant             |
+| NEXTAUTH_SECRET          | your_nextauth_secret      |
+| GOOGLE_CLIENT_ID         | your_google_client_id     |
+| GOOGLE_CLIENT_SECRET     | your_google_client_secret |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ⚙️ Project Setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Clone repo:
+  ```
+  git clone https://github.com/arunven3/GTaskAssistant.git
+  cd GTaskAssistant
+  ```
+- Install dependencies:
+  ```
+  npm install
+  ```
+- Start the development server:
+  ```
+  npm run dev
+  ```
+- Start the Ollama:
+  ```
+  ollama serve
+  ```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open your browser at http://localhost:3000
