@@ -4,13 +4,18 @@ import React, { useState, useEffect, useRef } from "react";
 import { SystemChatBubble } from "./SystemChatBubble";
 import { UserChatBubble } from "./UserChatBubblee";
 
-type Msg = { role: "user" | "system" | "assistant"; message: string };
+type Msg = {
+  role: "user" | "system" | "assistant";
+  message: string;
+  status: string;
+};
 
 export const Chat = () => {
   const [messages, setMessages] = useState<Msg[]>([
     {
       role: "system",
       message: "I'm your personal virtual assistant. How can I help?",
+      status: '',
     },
   ]);
 
@@ -35,7 +40,7 @@ export const Chat = () => {
     const text = input.trim();
     if (!text || loading) return;
 
-    addMessage({ role: "user", message: text });
+    addMessage({ role: "user", message: text, status: '' });
     setInput("");
 
     const assistantIndex = messages.length + 1;
@@ -53,7 +58,7 @@ export const Chat = () => {
         { role: "user", content: text },
       ];
 
-      const res = await fetch("/api/ollama", {
+      const res = await fetch("/api/chat", {
         method: "POST",
         signal: abortRef.current.signal,
         headers: { "Content-Type": "application/json" },
@@ -66,7 +71,9 @@ export const Chat = () => {
         throw new Error(`Request failed: ${res.status}`);
       }
 
-      addMessage({ role: "assistant", message: "" });
+      let status = "Sending Message";
+
+      addMessage({ role: "assistant", message: "", status });
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
@@ -74,58 +81,40 @@ export const Chat = () => {
       while (true) {
         const { value, done } = await reader.read();
         if (done) break;
+        console.log(value, done);
 
-        buffer += decoder.decode(value, { stream: true });
+        const streamResponse = JSON.parse(
+          decoder.decode(value, { stream: true }),
+        );
 
-        const lines = buffer.split("\n");
-        buffer = lines.pop() || "";
+        if (streamResponse.content) {
+          setMessages((prev) => {
+            const updated = [...prev];
+            const last = updated[assistantIndex];
 
-        for (const line of lines) {
-          const trimmed = line.trim();
-          if (!trimmed) continue;
-          try {
-            const json = JSON.parse(trimmed);
-            if (json.message?.content) {
-              const token: string = json.message.content;
-
-              setMessages((prev) => {
-                const updated = [...prev];
-                const last = updated[assistantIndex];
-
-                if (last && last.role === "assistant") {
-                  updated[assistantIndex] = {
-                    ...last,
-                    message: last.message + token,
-                  };
-                }
-                return updated;
-              });
+            if (last && last.role === "assistant") {
+              updated[assistantIndex] = {
+                ...last,
+                message: last.message + streamResponse.content,
+                status: streamResponse.status,
+              };
             }
-            if (json.done) {
-            }
-          } catch {}
+
+            return updated;
+          });
         }
       }
     } catch (err) {
       if (!(err instanceof DOMException && err.name === "AbortError")) {
         addMessage({
           role: "system",
-          message: "⚠️ Error talking to the local model. Is Ollama running?",
+          message: "⚠️ Error",
+          status: "",
         });
       }
     } finally {
       setLoading(false);
     }
-  };
-
-  const getChatDatas = () => {
-    return messages.map((message, index) => {
-      if (message.role === "user") {
-        return <UserChatBubble key={index} message={message.message} />;
-      } else {
-        return <SystemChatBubble key={index} message={message.message} />;
-      }
-    });
   };
 
   const stop = () => {
@@ -141,7 +130,7 @@ export const Chat = () => {
             m.role === "user" ? (
               <UserChatBubble key={i} message={m.message} />
             ) : (
-              <SystemChatBubble key={i} message={m.message} />
+              <SystemChatBubble key={i} status={m.status} message={m.message} />
             ),
           )}
           <div ref={bottomRef} />
@@ -156,7 +145,7 @@ export const Chat = () => {
               id="chat"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              rows="1"
+              rows={1}
               className="mx-4 block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               placeholder="Your message..."
             ></textarea>

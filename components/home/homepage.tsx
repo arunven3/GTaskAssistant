@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
-import { useLoading } from "@/app/contexts/LoadingContext";
+import { useLoading } from "@/contexts/LoadingContext";
 
 export const Homepage = () => {
   const { showLoading } = useLoading();

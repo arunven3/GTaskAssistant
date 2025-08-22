@@ -2,10 +2,10 @@ import { ThemeModeScript } from "flowbite-react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeInit } from "../.flowbite-react/init";
-import "./globals.css";
-import { MainLayout } from "./components/main";
-import { LoadingProvider } from "@/app/contexts/LoadingContext";
-import ThemeSwitcher from "./components/theme/ThemeSwitch";
+import "@/styles/globals.css";
+import { MainLayout } from "../components/main";
+import { LoadingProvider } from "@/contexts/LoadingContext";
+import ThemeSwitcher from "../components/theme/ThemeSwitch";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

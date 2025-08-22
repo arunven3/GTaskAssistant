@@ -12,7 +12,7 @@ export const UserChatBubble = ({ message }: { message: string }) => {
               User
             </span>
           </div>
-          <div className="py-2.5 text-sm font-normal text-gray-900 dark:text-white">
+          <div className="prose py-2.5 text-sm font-normal break-words whitespace-pre-wrap text-gray-900 dark:text-white">
             <ReactMarkdown rehypePlugins={[rehypeRaw, rehypeSanitize]}>
               {message}
             </ReactMarkdown>
