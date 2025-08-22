@@ -1,4 +1,4 @@
-# **GTaskAssistant** – Agentic AI Powered by by Local LLMs + Google APIs.
+# **GTaskAssistant** – Agentic AI Powered by Local LLMs + Google APIs.
 
 **GTaskAssistant** is an **Agentic AI-powered personal assistant** built with **Next.js**, integrating **Google API** , **tool calling**, and **real-time internet search**. Runs on local LLMs and provides streaming responses for a faster & seamless experience.
 
