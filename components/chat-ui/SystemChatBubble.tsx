@@ -2,7 +2,13 @@ import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import rehypeRaw from "rehype-raw";
 
-export const SystemChatBubble = ({ message }: { message: string }) => {
+export const SystemChatBubble = ({
+  message,
+  status,
+}: {
+  message: string;
+  status: string;
+}) => {
   return (
     <div className="flex items-start gap-2.5">
       <svg
@@ -21,10 +27,10 @@ export const SystemChatBubble = ({ message }: { message: string }) => {
       <div className="flex max-w-[90%] min-w-[320px] flex-col rounded-e-xl rounded-es-xl border-gray-200 bg-gray-100 p-4 leading-1.5 dark:bg-gray-700">
         <div className="flex items-center space-x-2 rtl:space-x-reverse">
           <span className="text-sm font-semibold text-gray-900 dark:text-white">
-            AI Assistant
+            AI Assistant {status}
           </span>
         </div>
-        <div className="py-2.5 text-sm font-normal text-gray-900 dark:text-white">
+        <div className="prose py-2.5 text-sm font-normal break-words break-all whitespace-pre-wrap text-gray-900 dark:text-white">
           <ReactMarkdown rehypePlugins={[rehypeRaw, rehypeSanitize]}>
             {message}
           </ReactMarkdown>

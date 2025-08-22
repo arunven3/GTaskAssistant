@@ -1,6 +1,6 @@
 "use client";
-import "@/app/styles/loader.css";
-import "@/app/styles/style.css";
+import "@/styles/loader.css";
+import "@/styles/style.css";
 
 export const LoadingScreen = ({ message }: { message: string }) => {
   return (

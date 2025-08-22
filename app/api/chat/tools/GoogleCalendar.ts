@@ -1,8 +1,8 @@
 import { getServerSession } from "next-auth";
 import { google } from "googleapis";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/AuthOptions";
 
-export const getCalendarEvents = async (toolData: any) => {
+export const getGoogleCalendarEvents = async (toolData: any) => {
   try {
     const session = await getServerSession(authOptions);
 
@@ -21,7 +21,7 @@ export const getCalendarEvents = async (toolData: any) => {
     const calendar = google.calendar({ version: "v3", auth });
 
     console.log(toolData);
-    const { start, end } = toolData.tool.date_range;
+    const { start, end } = toolData.arguments;
     // console.log(toolData);
 
     const res = await calendar.events.list({
