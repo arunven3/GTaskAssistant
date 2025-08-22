@@ -152,7 +152,7 @@ Running Local LLM with llama.cpp
 
 ## Coming Soon
 
-Many powerful features are on the way—including enhanced agent workflows, smarter task automation, finetuned LLM. Once added, GTaskAssistant will be the ultimate all-in-one AI productivity companion.
+Many powerful features are on the way including enhanced agent workflows, smarter task automation, finetuned LLM. Once added, GTaskAssistant will be the ultimate all-in-one AI productivity companion.
 
 ## Notes
 
