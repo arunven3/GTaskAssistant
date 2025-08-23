@@ -26,33 +26,16 @@ export const Homepage = () => {
                   Authorize your google account to start.
                 </p>
                 <div className="flex justify-center">
-                  <button
-                    onClick={() => {
-                      showLoading("Authentication Starting...");
-                      signIn("google", { callbackUrl: "/dashboard" });
-                    }}
-                    className="mt-10 flex h-[50px] w-[240px] items-center rounded-sm border-2 border-gray-400 bg-[#795548ed] text-white shadow-lg transition-colors duration-300 hover:bg-[#795548]"
-                  >
-                    <div className="flex h-full w-[50px] items-center justify-center border-r-1 border-solid border-gray-400">
-                      <svg
-                        className="h-6 w-6 text-white"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M12.037 21.998a10.313 10.313 0 0 1-7.168-3.049 9.888 9.888 0 0 1-2.868-7.118 9.947 9.947 0 0 1 3.064-6.949A10.37 10.37 0 0 1 12.212 2h.176a9.935 9.935 0 0 1 6.614 2.564L16.457 6.88a6.187 6.187 0 0 0-4.131-1.566 6.9 6.9 0 0 0-4.794 1.913 6.618 6.618 0 0 0-2.045 4.657 6.608 6.608 0 0 0 1.882 4.723 6.891 6.891 0 0 0 4.725 2.07h.143c1.41.072 2.8-.354 3.917-1.2a5.77 5.77 0 0 0 2.172-3.41l.043-.117H12.22v-3.41h9.678c.075.617.109 1.238.1 1.859-.099 5.741-4.017 9.6-9.746 9.6l-.215-.002Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </div>
-                    <p className="font-roboto ml-5 text-center text-[16px]">
-                      <b>Sign in with Google</b>
-                    </p>
+                  {/* /"mt-10 flex  items-center rounded-sm border-2 border-gray-400 bg-[#795548ed] text-white shadow-lg transition-colors duration-300 hover:bg-[#795548]" */}
+                  <button onClick={() => {
+                    showLoading("Authentication Starting...");
+                    signIn("google", { callbackUrl: "/dashboard" });
+                  }}
+                    type="button" className="text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-lg px-7 text-center inline-flex items-center h-[50px] mt-7">
+                    <svg className="w-6 h-6 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
+                      <path fillRule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clipRule="evenodd" />
+                    </svg>
+                    Sign in with Google
                   </button>
                 </div>
               </section>
