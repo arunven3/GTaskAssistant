@@ -4,35 +4,28 @@
 
 Can be used as your AI can able to schedule events, manage tasks, fetch real-time info from the web, and chat with advanced open-source models – all in one place.
 
-## Key Features
+---
 
-- Google API Integration – Access calendar, tasks, and more
-- Tool Calling – Execute actions with agentic precision
-- Live Web Search – Fetch real-time info with streaming responses
-- Local LLMs – Powered by llama.cpp for privacy and speed
-- Dark/Light Themes – Switch effortlessly between modes
-- Dev-Friendly Stack – Built with Next.js, Tailwind CSS, and NextAuth
-- Easy to extend with new AI models or add more tools
-- Can able to run offline also Private & offline-first with local models
-
-## What It Can Do
-
-- Schedule events and manage tasks
-- Chat with open-source models
-- Pull live data from the internet
-- Run fully offline with local model
-
-## Architecture Flow
+## Architecture Flow:
 
 ```mermaid
 graph TD
     A[👤 User Input] --> B[⚙️ Backend]
     B --> C[🧠 LLM Response]
     C --> D[📤 Partial Data Streamed to User]
-    C --> E[🔧 Tool Call: Google API / Internet Search]
+
+    %% Decision after partial data
+    D --> J{🛠️ Tools Needed?}
+
+    %% If tools are used
+    J -->|Yes| E[🔧 Tool Call: Google API / Internet Search]
     E --> F[📥 Tool Data Returned]
     F --> G[🧠 LLM Processes Tool Data]
     G --> H[📤 Final Enhanced Response Sent to User]
+    H --> I[✅ Done]
+
+    %% If no tools
+    J -->|No| I[✅ Done]
 ```
 
 ---
@@ -44,6 +37,28 @@ You can see a screenshot of GTaskAssistant below:
 ![GTaskAssistant Screenshot](./public/Screenshot-1.png)
 
 ![GTaskAssistant Screenshot](./public/Screenshot-2.png)
+
+---
+
+## Implemented Features
+
+- Google API Integration with Calendar, Gmail, and more.
+- Tool Calling that executes actions with agentic precision.
+- Real-Time Data Fetching via internet web search.
+- Local LLM (llama.cpp) Integration for privacy and Offline Use case.
+- Supports Multiple Authentication Email/Password login & Google OAuth Login.
+- Added Theme Provider with Dark/Light themes and able to customize Full-page theme options easily.
+- Its Dev-Friendly Stack Created by using Next.js, Tailwind CSS, Prisma + SQLite for database, Llama-cpp, Opensource LLM Models
+- Easy to Add new AI models, more tools, or extend APIs.
+
+## What It Can Do
+
+- Schedule events and manage tasks
+- Chat with open-source models
+- Pull live data from the internet
+- Run fully offline with local model
+
+---
 
 ## Tech Stack
 
@@ -105,7 +120,7 @@ models/
   phi-4.gguf
 ```
 
-## Google Search Setup
+**3. Google Search Setup:**
 
 We use **Google Custom Search API** for real-time search.
 
@@ -113,6 +128,37 @@ We use **Google Custom Search API** for real-time search.
 2. Enable **Custom Search JSON API**
 3. Create a Custom Search Engine at [Programmable Search Engine](https://programmablesearchengine.google.com/)
 4. Add credentials in `.env`:
+
+**4. Setup Database (Prisma + SQLite):**
+
+Run this commasn from terminal:
+
+```
+  npx prisma generate
+  npx prisma migrate dev --name init
+```
+
+---
+
+## Authentication Flow
+
+1.Email/Password
+
+- Uses Prisma + bcrypt
+- Tokens stored in database for session verification
+
+2. Google OAuth
+
+- Integrated via NextAuth
+- Managed by google Access Token
+
+## Theme Customization
+
+- Toggle Dark/Light mode switch included
+- Theme changes automatically
+- EasyCustomizable Theme Provider allows adding layouts with advanced styles
+
+---
 
 ## Setup Enviroinmnet variable
 

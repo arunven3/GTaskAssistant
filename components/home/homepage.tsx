@@ -18,8 +18,8 @@ export const Homepage = () => {
           Welcome to GTaskAssistant
         </h1>
         <h2 className="mt-10 text-xl font-semibold">
-          I{"'"}m your AI-powered smart assistant. Designed to help you stay
-          organized and productive.
+          Think of me as your digital brain helping you stay organized, focused,
+          and one step ahead.
         </h2>
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-6 p-6 md:grid-cols-2">
           <div className="rounded-xl border p-6 text-center shadow-sm transition hover:shadow-md">
