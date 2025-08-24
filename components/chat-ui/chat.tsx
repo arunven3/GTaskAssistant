@@ -15,7 +15,7 @@ export const Chat = () => {
     {
       role: "system",
       message: "I'm your personal virtual assistant. How can I help?",
-      status: '',
+      status: "",
     },
   ]);
 
@@ -40,7 +40,7 @@ export const Chat = () => {
     const text = input.trim();
     if (!text || loading) return;
 
-    addMessage({ role: "user", message: text, status: '' });
+    addMessage({ role: "user", message: text, status: "" });
     setInput("");
 
     const assistantIndex = messages.length + 1;

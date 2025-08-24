@@ -20,6 +20,7 @@ const eslintConfig = [
         "warn",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
+      ignorePatterns: ["lib/generated/**", "node_modules/**"],
 
       "prefer-const": "warn",
     },

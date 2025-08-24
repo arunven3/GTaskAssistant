@@ -1,4 +1,4 @@
-import { ThemeModeScript } from "flowbite-react";
+import { ThemeProvider, ThemeModeScript } from "flowbite-react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeInit } from "../.flowbite-react/init";
@@ -6,6 +6,7 @@ import "@/styles/globals.css";
 import { MainLayout } from "../components/main";
 import { LoadingProvider } from "@/contexts/LoadingContext";
 import ThemeSwitcher from "../components/theme/ThemeSwitch";
+import { Theme } from "@/components/theme/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +39,9 @@ export default function RootLayout({
         <ThemeSwitcher />
         <ThemeInit />
         <LoadingProvider>
-          <MainLayout>{children}</MainLayout>
+          <ThemeProvider theme={Theme}>
+            <MainLayout>{children}</MainLayout>
+          </ThemeProvider>
         </LoadingProvider>
       </body>
     </html>
