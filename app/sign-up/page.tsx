@@ -8,11 +8,12 @@ import { Theme } from "@/components/theme/ThemeProvider";
 import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
-  const { showLoading } = useLoading();
+  const { showLoading, hideLoading } = useLoading();
   const router = useRouter();
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    showLoading("Registering...");
     const form = new FormData(e.currentTarget);
 
     const res = await fetch("/api/auth/register", {
@@ -24,6 +25,7 @@ export default function SignInPage() {
       }),
       headers: { "Content-Type": "application/json" },
     });
+    hideLoading();
 
     if (res.ok) router.push("/dashboard");
     else alert((await res.json()).error || "Failed");

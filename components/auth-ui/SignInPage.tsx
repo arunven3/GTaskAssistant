@@ -8,7 +8,7 @@ import { Theme } from "@/components/theme/ThemeProvider";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export const SignInPage = () => {
-  const { showLoading } = useLoading();
+  const { showLoading, hideLoading } = useLoading();
   const router = useRouter();
   const next = useSearchParams().get("next") || "/dashboard";
 
@@ -27,6 +27,7 @@ export const SignInPage = () => {
         headers: { "Content-Type": "application/json" },
       });
 
+      hideLoading();
       if (result.ok) router.push(next);
       else alert((await result.json()).error || "Failed");
     } catch (error) {
