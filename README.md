@@ -130,6 +130,7 @@ We use **Google Custom Search API** for real-time search.
 4. Add credentials in `.env`:
 
 **4. Setup Database (Prisma + SQLite):**
+
 Run this commasn from terminal:
 
 ```
