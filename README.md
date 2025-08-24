@@ -1,4 +1,4 @@
-# **GTaskAssistant** – Agentic AI Powered by by Local LLMs + Google APIs.
+# **GTaskAssistant** – Agentic AI Powered by Local LLMs + Google APIs.
 
 **GTaskAssistant** is an **Agentic AI-powered personal assistant** built with **Next.js**, integrating **Google API** , **tool calling**, and **real-time internet search**. Runs on local LLMs and provides streaming responses for a faster & seamless experience.
 
@@ -152,7 +152,7 @@ Running Local LLM with llama.cpp
 
 ## Coming Soon
 
-Many powerful features are on the way—including enhanced agent workflows, smarter task automation, finetuned LLM. Once added, GTaskAssistant will be the ultimate all-in-one AI productivity companion.
+Many powerful features are on the way including enhanced agent workflows, smarter task automation, finetuned LLM. Once added, GTaskAssistant will be the ultimate all-in-one AI productivity companion.
 
 ## Notes
 
