@@ -120,7 +120,7 @@ models/
   phi-4.gguf
 ```
 
-## Google Search Setup
+**3. Google Search Setup:**
 
 We use **Google Custom Search API** for real-time search.
 
@@ -128,6 +128,16 @@ We use **Google Custom Search API** for real-time search.
 2. Enable **Custom Search JSON API**
 3. Create a Custom Search Engine at [Programmable Search Engine](https://programmablesearchengine.google.com/)
 4. Add credentials in `.env`:
+
+**4. Setup Database (Prisma + SQLite):**
+Run this commasn from terminal:
+
+```
+  npx prisma generate
+  npx prisma migrate dev --name init
+```
+
+---
 
 ## Authentication Flow
 
@@ -146,6 +156,8 @@ We use **Google Custom Search API** for real-time search.
 - Toggle Dark/Light mode switch included
 - Theme changes automatically
 - EasyCustomizable Theme Provider allows adding layouts with advanced styles
+
+---
 
 ## Setup Enviroinmnet variable
 
