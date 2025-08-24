@@ -42,3 +42,10 @@ next-env.d.ts
 
 .flowbite-react
 .vscode
+
+/lib/generated/prisma
+
+/lib/generated/prisma
+
+.prisma/
+
