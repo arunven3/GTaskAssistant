@@ -28,7 +28,7 @@ export const Homepage = () => {
               Create an account to start using GTaskAssistant.
             </p>
             <Button
-              onClick={() => router.push("/sign-up")}
+              onClick={() => router.push("/logout")}
               color="primary"
               className="w-[140px] place-self-center-safe"
             >
@@ -41,7 +41,7 @@ export const Homepage = () => {
               Already have an account? Continue with sign in.
             </p>
             <Button
-              onClick={() => router.push("/sign-in")}
+              onClick={() => router.push("login")}
               color="primary"
               className="w-[140px] place-self-center-safe"
             >

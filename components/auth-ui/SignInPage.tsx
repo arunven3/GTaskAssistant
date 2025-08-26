@@ -1,35 +1,38 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import { signIn } from "next-auth/react";
 import { useLoading } from "@/contexts/LoadingContext";
 import { Button, TextInput } from "flowbite-react";
 import { Theme } from "@/components/theme/ThemeProvider";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export const SignInPage = () => {
+export const SignInPage = ({ page }: { page: string }) => {
   const { showLoading, hideLoading } = useLoading();
   const router = useRouter();
   const next = useSearchParams().get("next") || "/dashboard";
+  const refEmail = useRef<HTMLInputElement>(null);
+  const refPassword = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     showLoading("Signing in...");
-    const formData = new FormData(e.currentTarget);
 
     try {
-      const result = await fetch("/api/auth/login", {
+      const result = await fetch(`/api/${page}/login`, {
         method: "POST",
         body: JSON.stringify({
-          email: formData.get("email"),
-          password: formData.get("password"),
+          email: refEmail?.current?.value,
+          password: refPassword?.current?.value,
         }),
         headers: { "Content-Type": "application/json" },
       });
 
-      hideLoading();
+      setTimeout(() => {}, 200);
+
       if (result.ok) router.push(next);
       else alert((await result.json()).error || "Failed");
+
+      hideLoading();
     } catch (error) {
       console.log("An error occurred during sign in");
     }
@@ -41,10 +44,7 @@ export const SignInPage = () => {
         <div className="w-full">
           <div className="">
             <h2 className="text-xl font-semibold">Sign In your account</h2>
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-4 pt-10 text-left md:space-y-6"
-            >
+            <div className="space-y-4 pt-10 text-left md:space-y-6">
               <div>
                 <label
                   htmlFor="email"
@@ -60,6 +60,7 @@ export const SignInPage = () => {
                   name="email"
                   id="email"
                   placeholder="name@company.com"
+                  ref={refEmail}
                   required
                 />
               </div>
@@ -78,11 +79,17 @@ export const SignInPage = () => {
                   name="password"
                   id="password"
                   placeholder="••••••••"
+                  ref={refPassword}
                   required
                 />
               </div>
 
-              <Button color="primary" type="submit" className="w-full">
+              <Button
+                onClick={() => handleSubmit()}
+                color="primary"
+                type="submit"
+                className="w-full"
+              >
                 Sign in
               </Button>
 
@@ -129,7 +136,7 @@ export const SignInPage = () => {
               <p className={Theme.text + " text-md"}>
                 Don{"'"}t have an account yet?{" "}
                 <a
-                  onClick={() => router.push("/sign-up")}
+                  onClick={() => router.push("/register")}
                   className={
                     Theme.highlightText +
                     " cursor-pointer font-medium hover:underline"
@@ -138,7 +145,7 @@ export const SignInPage = () => {
                   Sign up
                 </a>
               </p>
-            </form>
+            </div>
           </div>
         </div>
       </section>

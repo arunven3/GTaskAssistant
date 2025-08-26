@@ -4,12 +4,22 @@ import { jwtVerify } from "jose";
 export const isAuthenticated = async (req: NextRequest) => {
   const token = req.cookies.get("gtask.token")?.value;
 
-  //   console.log(
-  //     "cookies",
-  //     req.cookies,
-  //     req.cookies.get("next-auth.session-token"),
-  //   );
-  if (req.cookies.get("next-auth.session-token")?.value) return true;
+  if (!token) {
+    return false;
+  }
+
+  try {
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
+    await jwtVerify(token, secret);
+
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+export const isAdminAuthenticated = async (req: NextRequest) => {
+  const token = req.cookies.get("gtask.admin.token")?.value;
 
   if (!token) {
     return false;
@@ -18,6 +28,7 @@ export const isAuthenticated = async (req: NextRequest) => {
   try {
     const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
     await jwtVerify(token, secret);
+
     return true;
   } catch {
     return false;
