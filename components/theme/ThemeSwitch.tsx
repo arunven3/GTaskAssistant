@@ -6,7 +6,6 @@ import { DarkThemeToggle } from "flowbite-react";
 export default function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
 
-  // Prevents hydration mismatch
   useEffect(() => {
     setMounted(true);
   }, []);

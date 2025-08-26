@@ -20,7 +20,3 @@ export async function GET(request: NextRequest) {
     headers: { "Content-Type": "application/json" },
   });
 }
-
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}

@@ -1,5 +1,7 @@
 import GoogleProvider from "next-auth/providers/google";
 import { refreshAccessToken } from "@/app/api/auth/[...nextauth]/tokens";
+import { signJwt, setAuthCookie } from "@/lib/Auth/auth";
+import { prisma } from "@/lib/prisma";
 
 export const authOptions = {
   providers: [
@@ -24,6 +26,29 @@ export const authOptions = {
     }),
   ],
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      let userData = await prisma.user.findUnique({
+        where: { email: user.email },
+      });
+
+      if (!userData) {
+        userData = await prisma.user.create({
+          data: {
+            email: user.email,
+            password: null,
+            name: user.name,
+            emailVerified: true,
+            SSOUser: true,
+          },
+          select: { id: true, email: true, name: true, createdAt: true },
+        });
+      }
+
+      const token = signJwt({ sub: String(userData.id), email: user.email });
+      setAuthCookie(token);
+
+      return true;
+    },
     async jwt({ token, account }) {
       if (account) {
         token.accessToken = account.access_token;
@@ -31,13 +56,13 @@ export const authOptions = {
         token.expiresAt = Math.floor(Date.now() / 1000) + account.expires_in;
       }
 
-      // Refresh if expired
       if (Date.now() / 1000 >= token.expiresAt) {
         return await refreshAccessToken(token);
       }
 
       return token;
     },
+
     async session({ session, token }) {
       session.user = token.user ?? session.user;
       session.accessToken = token.accessToken;
