@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { hashPassword, signJwt, setAuthCookie } from "@/lib/Auth/auth";
+import { hashPassword, getAuthResponseCookie } from "@/lib/Auth/auth";
 
 export async function POST(req: Request) {
   try {
@@ -22,15 +22,15 @@ export async function POST(req: Request) {
     }
 
     const passwordHash = await hashPassword(password);
+
     const user = await prisma.user.create({
       data: { email, password: passwordHash, name },
-      select: { id: true, email: true, name: true, createdAt: true },
+      select: { id: true },
     });
 
-    const token = signJwt({ sub: String(user.id), email: user.email });
-    setAuthCookie(token);
+    const response = NextResponse.json({ status: "sucess" });
 
-    return NextResponse.json({ user });
+    return await getAuthResponseCookie(user.id, email, response);
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: "Unexpected error." }, { status: 500 });

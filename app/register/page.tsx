@@ -16,7 +16,7 @@ export default function SignInPage() {
     showLoading("Registering...");
     const form = new FormData(e.currentTarget);
 
-    const res = await fetch("/api/auth/register", {
+    const res = await fetch("/api/auth/user/register", {
       method: "POST",
       body: JSON.stringify({
         email: form.get("email"),
@@ -25,6 +25,8 @@ export default function SignInPage() {
       }),
       headers: { "Content-Type": "application/json" },
     });
+
+    setTimeout(() => {}, 200);
     hideLoading();
 
     if (res.ok) router.push("/dashboard");
@@ -183,7 +185,7 @@ export default function SignInPage() {
               <p className="text-sm font-light">
                 Already have an account?{" "}
                 <a
-                  onClick={() => router.push("/sign-in")}
+                  onClick={() => router.push("/login")}
                   className="cursor-pointer font-medium"
                 >
                   Login here

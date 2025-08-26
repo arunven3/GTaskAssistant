@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { signJwt, setAuthCookie, verifyPassword } from "@/lib/Auth/auth";
+import { getAdminAuthResponseCookie, verifyPassword } from "@/lib/Auth/auth";
 
 export async function POST(req: Request) {
   try {
@@ -12,7 +12,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.adminUser.findUnique({ where: { email } });
 
     if (!user) {
       return NextResponse.json(
@@ -31,26 +31,22 @@ export async function POST(req: Request) {
       );
     }
 
-    const ok = await verifyPassword(password, user.password);
-
-    if (!ok) {
+    if (!(await verifyPassword(password, user.password))) {
       return NextResponse.json(
         { error: "Invalid credentials." },
         { status: 401 },
       );
     }
 
-    const token = signJwt({ sub: String(user.id), email: user.email });
-    setAuthCookie(token);
-
-    return NextResponse.json({
+    const response = NextResponse.json({
       user: {
         id: user.id,
         email: user.email,
         name: user.name,
-        createdAt: user.createdAt,
       },
     });
+
+    return await getAdminAuthResponseCookie(user.id, user.email, response);
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: "Unexpected error." }, { status: 500 });
