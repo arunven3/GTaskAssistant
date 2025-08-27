@@ -1,6 +1,4 @@
-import ReactMarkdown from "react-markdown";
-import rehypeSanitize from "rehype-sanitize";
-import rehypeRaw from "rehype-raw";
+import { Streamdown } from "streamdown";
 
 export const SystemChatBubble = ({
   message,
@@ -31,9 +29,7 @@ export const SystemChatBubble = ({
           </span>
         </div>
         <div className="prose py-2.5 text-sm font-normal break-words break-all whitespace-pre-wrap text-gray-900 dark:text-white">
-          <ReactMarkdown rehypePlugins={[rehypeRaw, rehypeSanitize]}>
-            {message}
-          </ReactMarkdown>
+          <Streamdown>{message}</Streamdown>
         </div>
       </div>
     </div>
