@@ -4,8 +4,9 @@ import { Button, Drawer, DrawerHeader, DrawerItems } from "flowbite-react";
 import { useState, useEffect } from "react";
 import { SideNavBar } from "./SideNavBar";
 import { Header } from "./header";
+import { Theme } from "../theme/ThemeProvider";
 
-export function BaseLayout() {
+export function BaseLayout({ children }: { children?: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(true);
   const toggleDrawer = () => setIsOpen(!isOpen);
   let backdrop = false;
@@ -24,16 +25,20 @@ export function BaseLayout() {
     <>
       <Header drawerHandler={toggleDrawer} />
       <Drawer
-        className="mt-2 w-auto bg-amber-950 p-0"
+        className="mt-2 w-auto p-0"
         backdrop={backdrop}
         open={isOpen}
         onClose={toggleDrawer}
       >
-        <DrawerHeader title="FlowBite" />
+        <DrawerHeader title="SideBar" />
         <DrawerItems>
           <SideNavBar />
         </DrawerItems>
       </Drawer>
+
+      <div className={`${Theme.admin.page.base + Theme.adminPage.background} `}>
+        <div>{children}</div>
+      </div>
     </>
   );
 }

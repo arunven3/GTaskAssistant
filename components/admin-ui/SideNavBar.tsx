@@ -5,7 +5,12 @@ import {
   SidebarItemGroup,
   SidebarItems,
 } from "flowbite-react";
-import { HiChartPie, HiChip, HiDocumentText } from "react-icons/hi";
+import {
+  HiChartPie,
+  HiChip,
+  HiDocumentText,
+  HiUserGroup,
+} from "react-icons/hi";
 
 export const SideNavBar = () => {
   return (
@@ -13,12 +18,17 @@ export const SideNavBar = () => {
       <Sidebar className="fixed top-0 bottom-0 left-0 z-40 pt-15">
         <SidebarItems className="">
           <SidebarItemGroup>
-            <SidebarItem href="#" icon={HiChartPie}>
+            <SidebarItem href="/admin/secured/dashboard" icon={HiChartPie}>
               Dashboard
             </SidebarItem>
-            <SidebarCollapse icon={HiDocumentText} label="Add Embedding">
-              <SidebarItem href="#">Add Text</SidebarItem>
-              <SidebarItem href="#">Upload Document</SidebarItem>
+            <SidebarItem href="#" icon={HiUserGroup}>
+              Users
+            </SidebarItem>
+            <SidebarCollapse icon={HiDocumentText} label="Embeddings">
+              <SidebarItem href="#">Text</SidebarItem>
+              <SidebarItem href="/admin/secured/embeddings/document">
+                Document
+              </SidebarItem>
             </SidebarCollapse>
             <SidebarItem href="#" icon={HiChip}>
               Finetune Model
