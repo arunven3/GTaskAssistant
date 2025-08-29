@@ -1,40 +1,52 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { GoogleSearch } from "@/app/api/chat/tools/GoogleSearch";
 import { getGoogleCalendarEvents } from "@/app/api/chat/tools/GoogleCalendar";
-// import fetch from "node-fetch";
+import { getAllMatchingChunks } from "@/lib/RAG/base";
+
 export const runtime = "nodejs";
 
 const LLAMA_URL = "http://127.0.0.1:8080/v1/chat/completions";
 
-const systemPrompt = {
-  role: "system",
-  content: `
-  You are a useful AI assistant named "GTaskAssistant". Answer the user's question carefully.
-        Current date: "2025-08-22"
-        Timezone: "Asia/Kolkata" (+05:30)
+const getSystemPrompt = (context: string = "") => {
+  let contextPrompt = "";
 
-      - Answer from your own knowledge (math, logic, general facts), ALWAYS answer directly.
-      - Only call a tool when: external website data is required (e.g., news, prices, weather, search).
-      - When the user asks about appointments, schedules, or calendar events (anything related to Google Calendar) response get_calendar tool
-      - Only call a tool when needed chose any one tool:
-          • Use calendar for anything about appointments, schedules, or calendar events (Google Calendar). Example JSON: {calendar: {"date_range": {"start": "YYYY-MM-DDTHH:mm:ss","end": "YYYY-MM-DDTHH:mm:ss"}}}
-          • Use googleSearch for real-time or external web information (news, prices, weather, etc.).
+  if (context.length > 1) {
+    contextPrompt = `- If the retrieved CONTEXT contains information relevant to the user query, use it to improve or ground your answer.. Context: ${context}`;
+  }
 
+  const prompt = {
+    role: "system",
+    content: `
+You are a useful AI assistant named "GTaskAssistant". Answer the user's question carefully.
+Current date: "2025-08-22"
+Timezone: "Asia/Kolkata" (+05:30)
 
-      - When calling a tool, respond ONLY with JSON: { "tool": "<toolName>", "arguments": { ... } }
-      - Do not use markdowndata for tools.
-      - After receiving tool results, summarize for the user in plain language.
-      - For normal answers, use markdown and DO NOT start with JSON.
+- Answer from your own knowledge (math, logic, general facts). ALWAYS answer directly.
+${contextPrompt}
+- Only call a tool when external website data is required (e.g., news, prices, weather, search).
+- When the user asks about appointments, schedules, or calendar events, respond using the "calendar" tool.
 
-      TOOLS:
-      - googleSearch: { "query": string }  -> Search the internet for real-time information.
-      - calendar: {"arguments": {"start": "YYYY-MM-DDTHH:mm:ss","end": "YYYY-MM-DDTHH:mm:ss"}} -> get google calender events
+- Only call ONE tool at a time:
+  • calendar → for appointments, schedules, or calendar events. Example: { "tool": "calendar", "arguments": { "start": "YYYY-MM-DDTHH:mm:ss", "end": "YYYY-MM-DDTHH:mm:ss" } }
+  • googleSearch → for real-time or external web info (news, prices, weather, etc.). Example: { "tool": "googleSearch", "arguments": { "query": "string" } }
+
+- When calling a tool, respond ONLY with JSON (no markdown).
+- After receiving tool results, summarize for the user in plain language.
+- For normal answers, use markdown and DO NOT start with JSON.
+
+TOOLS:
+- googleSearch: { "query": string } → Search the internet for real-time information.
+- calendar: { "start": "YYYY-MM-DDTHH:mm:ss", "end": "YYYY-MM-DDTHH:mm:ss" } → Get Google Calendar events.
     `,
+  };
+
+  return prompt;
 };
 
 export async function POST(req: NextRequest) {
   const { messages } = await req.json();
-  const message = messages[messages.length - 1].content;
+  const UserMessage = messages[messages.length - 1].content;
+  const context = (await getAllMatchingChunks(UserMessage)) || "";
 
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
@@ -66,8 +78,6 @@ export async function POST(req: NextRequest) {
             const chunkContent =
               JSON.parse(decodedValue).choices[0].delta.content;
 
-            // console.log(decodedValue);
-
             try {
               buffer += chunkContent.replace(/```json|```|[\n\r\s]/g, "") || "";
             } catch (err) {}
@@ -95,7 +105,7 @@ export async function POST(req: NextRequest) {
                 }
 
                 await callLLM([
-                  systemPrompt,
+                  getSystemPrompt(),
                   { role: "user", content: JSON.stringify(message) },
                   { role: "assistant", content: JSON.stringify(toolCall) },
                   { role: "tool", content: JSON.stringify(toolResult) },
@@ -107,7 +117,6 @@ export async function POST(req: NextRequest) {
               }
             } else {
               buffer = "";
-              // console.log(chunkContent);
               controller.enqueue(
                 encoder.encode(
                   // "data: " +
@@ -123,7 +132,11 @@ export async function POST(req: NextRequest) {
         }
       }
 
-      await callLLM([systemPrompt, { role: "user", content: message }]);
+      await callLLM([
+        getSystemPrompt(context),
+        { role: "user", content: UserMessage },
+      ]);
+
       controller.close();
     },
   });
@@ -131,4 +144,10 @@ export async function POST(req: NextRequest) {
   return new Response(stream, {
     headers: { "Content-Type": "application/json" },
   });
+}
+
+export async function GET(req: NextRequest) {
+  const context = (await getAllMatchingChunks("Who is Arun")) || "";
+
+  return NextResponse.json({ context });
 }

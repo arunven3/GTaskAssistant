@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { Qdrant } from "@/lib/RAG/qdrant";
+import { embedAndStore } from "@/lib/RAG/base";
 import fs from "fs";
 import path from "path";
 import pdfParse from "pdf-parse";
@@ -56,11 +56,10 @@ export async function POST(req: Request) {
       },
     });
 
-    const vectorStorage = new Qdrant(sanitizedName);
     const wordChunks = splitTextByWords(text);
 
     for (let wordChunk of wordChunks) {
-      await vectorStorage.embedAndStore(FileId, wordChunk);
+      await embedAndStore(sanitizedName, FileId, wordChunk);
     }
 
     return NextResponse.json({ message: "File uploaded successfully." });

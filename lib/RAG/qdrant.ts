@@ -24,16 +24,10 @@ export class Qdrant {
 
   public GetAllCollections = async () => this.qdrant.getCollections();
 
-  private async addEmbedding(id: string, vector: number[], text: string) {
+  public async addEmbedding(id: string, vector: number[], text: string) {
     console.log(vector.length);
 
     await this.CheckCollection(vector.length);
-
-    console.log("debug data", {
-      id,
-      vector,
-      payload: { text },
-    });
 
     await this.qdrant.upsert(this.collection, {
       points: [
@@ -50,15 +44,38 @@ export class Qdrant {
     await this.qdrant.deleteCollection(collection);
   }
 
-  public async embedAndStore(id: string, text: string) {
-    const embedding = await TextEmbedder.getEmbeding(text);
-    await this.addEmbedding(id, embedding, text);
-  }
-
-  private searchEmbedding(query: number[], topK = 10) {
+  public searchEmbedding(query: number[], topK = 10) {
     return this.qdrant.search(this.collection, {
       vector: query,
       limit: topK,
     });
+  }
+
+  public async searchFromAllCollections(
+    query: number[],
+    topK = 10,
+  ): Promise<string> {
+    const { collections } = await this.GetAllCollections();
+    let allResults = [];
+
+    for (let collection of collections) {
+      const results = await this.qdrant.search(collection.name, {
+        vector: query,
+        limit: topK,
+        score_threshold: 0.6,
+      });
+
+      allResults.push(...results);
+    }
+
+    const sortedResults = allResults
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 15);
+
+    const data = sortedResults
+      .map((result, i) => `${i + 1}. ${result.payload?.text}`)
+      .join("\n\n");
+
+    return data;
   }
 }
