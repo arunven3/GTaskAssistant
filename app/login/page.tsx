@@ -7,7 +7,7 @@ import { Suspense } from "react";
 export default function page() {
   return (
     <Suspense>
-      <SignInPage page="auth/user"></SignInPage>
+      <SignInPage page="auth/user" onSucess="/dashboard"></SignInPage>
     </Suspense>
   );
 }

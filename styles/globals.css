@@ -4,6 +4,8 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@source "../node_modules/streamdown/dist/index.js";
+
 :root {
   --loader-color: no-repeat linear-gradient(#fff 0 0);
 }

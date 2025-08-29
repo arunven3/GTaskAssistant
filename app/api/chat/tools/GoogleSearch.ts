@@ -8,8 +8,9 @@ export const GoogleSearch = async (query: string) => {
   const url = new URL("https://www.googleapis.com/customsearch/v1");
   url.searchParams.set(
     "q",
-    `${query} ${"site:wikipedia.org OR site:gov.in OR site:thehindu.com OR site:ndtv.com OR site:timesofindia.indiatimes.com"}`,
+    `${query} ${" site:wikipedia.org OR site:gov.in OR site:thehindu.com OR site:ndtv.com OR site:timesofindia.indiatimes.com"}`,
   );
+
   url.searchParams.set("key", process.env.GOOGLE_API_KEY!);
   url.searchParams.set("cx", process.env.GOOGLE_CX!);
 

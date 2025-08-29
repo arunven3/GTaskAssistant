@@ -67,6 +67,15 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model ChunkingFiles {
+  id            String     @id @default(cuid())
+  filename      String
+  sanitizedName String
+  path          String
+  size          String
+  createdAt     DateTime   @default(now())
+}
+
 model AdminUser {
   id            String    @id @default(cuid())
   name          String?

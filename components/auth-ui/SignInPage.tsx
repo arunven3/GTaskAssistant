@@ -7,10 +7,16 @@ import { Button, TextInput } from "flowbite-react";
 import { Theme } from "@/components/theme/ThemeProvider";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export const SignInPage = ({ page }: { page: string }) => {
+export const SignInPage = ({
+  page,
+  onSucess,
+}: {
+  page: string;
+  onSucess: string;
+}) => {
   const { showLoading, hideLoading } = useLoading();
   const router = useRouter();
-  const next = useSearchParams().get("next") || "/dashboard";
+  const next = useSearchParams().get("next") || onSucess;
   const refEmail = useRef<HTMLInputElement>(null);
   const refPassword = useRef<HTMLInputElement>(null);
 
