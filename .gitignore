@@ -48,7 +48,8 @@ next-env.d.ts
 /lib/generated/prisma
 
 .prisma/
-
+.flowbite-react/
+.vscode/
 uploads/
 models/
 qdrant_data/
