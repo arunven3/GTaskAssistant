@@ -49,3 +49,6 @@ next-env.d.ts
 
 .prisma/
 
+uploads/
+models/
+qdrant_data/

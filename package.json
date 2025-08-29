@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "docker compose up -d qdrant && next dev",
     "build": "next build",
     "start": "next start",
+    "build:docker": "docker build -t gtaskassistant-nextjs .",
     "lint": "next lint",
     "format": "prettier . --write",
     "format:check": "prettier . --check",

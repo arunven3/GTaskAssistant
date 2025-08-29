@@ -16,15 +16,57 @@ import {
   Modal,
   ModalBody,
   ModalHeader,
+  Popover,
+  ListGroup,
+  ListGroupItem,
+  Dropdown,
+  DropdownItem,
+  DropdownDivider,
 } from "flowbite-react";
-import { HiDocumentAdd, HiDocumentRemove, HiSearch } from "react-icons/hi";
-import { useState } from "react";
+import {
+  HiDocumentAdd,
+  HiDocumentRemove,
+  HiDotsHorizontal,
+  HiDotsVertical,
+  HiFolderOpen,
+  HiFolderRemove,
+  HiSearch,
+  HiSwitchVertical,
+} from "react-icons/hi";
+import { useState, useEffect } from "react";
 
 import { useLoading } from "@/contexts/LoadingContext";
 
 export default function Page() {
   const [openModal, setOpenModal] = useState(false);
   const { showLoading, hideLoading } = useLoading();
+  const [documents, setDocuments] = useState([]);
+
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      const res = await fetch("/admin/secured/embeddings/collections", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res.ok) {
+        const datas = await res.json();
+        setDocuments(datas);
+        console.log(datas);
+      }
+    };
+    fetchDocuments();
+  }, []);
+
+  const deleteUser = async (id: string) => {
+    const res = await fetch(`/admin/secured/embeddings/collections/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -102,18 +144,38 @@ export default function Page() {
                   </TableHeadCell>
                   <TableHeadCell>File Name</TableHeadCell>
                   <TableHeadCell>Size</TableHeadCell>
+                  <TableHeadCell>Action</TableHeadCell>
                 </TableRow>
               </TableHead>
               <TableBody className="divide-y">
-                <TableRow>
-                  <TableCell className="p-4">
-                    <Checkbox />
-                  </TableCell>
-                  <TableCell className="font-medium whitespace-nowrap text-gray-900 dark:text-white">
-                    File 1.pdf
-                  </TableCell>
-                  <TableCell>120 Kb</TableCell>
-                </TableRow>
+                {documents.map((doc: any) => (
+                  <TableRow key={doc.id}>
+                    <TableCell className="p-4">
+                      <Checkbox />
+                    </TableCell>
+                    <TableCell className="font-medium whitespace-nowrap text-gray-900 dark:text-white">
+                      {doc.filename}
+                    </TableCell>
+                    <TableCell>{doc.size} Kb</TableCell>
+                    <TableCell>
+                      <Dropdown
+                        inline={true}
+                        renderTrigger={() => <HiDotsVertical size={18} />}
+                      >
+                        <DropdownItem href={doc.path} icon={HiFolderOpen}>
+                          Open
+                        </DropdownItem>
+                        <DropdownDivider />
+                        <DropdownItem
+                          onClick={() => deleteUser(doc.id)}
+                          icon={HiDocumentRemove}
+                        >
+                          Delete
+                        </DropdownItem>
+                      </Dropdown>
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </div>

@@ -1,3 +1,5 @@
+import { basename } from "path";
+
 export const BaseTheme = {
   button: {
     base: "text-md rounded-lg px-4 py-2  transition-all duration-200",
@@ -58,5 +60,8 @@ export const BaseTheme = {
         },
       },
     },
+  },
+  dropdown: {
+    base: "w-48 text-sm",
   },
 };

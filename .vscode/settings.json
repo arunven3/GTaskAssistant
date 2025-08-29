@@ -17,10 +17,13 @@
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "files.watcherExclude": {
+    "**/.flowbite-react**": true,
+    "**/lib/generated**": true,
     "**/node_modules/**": true
   },
   "typescript.tsc.autoDetect": "off",
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "files.autoSave": "off"
 }
