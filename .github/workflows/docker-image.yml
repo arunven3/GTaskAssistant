@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Log in to HF container registry
+        run: echo ${{ secrets.HF_TOKEN }} | docker login ghcr.io -u ${{ secrets.HF_USERNAME }} --password-stdin
+
+      - name: Build and tag Docker image
+        run: docker build . --file Dockerfile --tag ${{ secrets.HF_USERNAME }}/my-task-assistant:latest
+
+      - name: Push image
+        run: docker push ${{ secrets.HF_USERNAME }}/my-task-assistant:latest
