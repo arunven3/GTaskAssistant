@@ -50,4 +50,16 @@ export const IndigoThemeCorlor = {
         "text-indigo-600 hover:text-indigo-700 focus:underline focus:text-indigo-800",
     },
   },
+
+  adminPage: {
+    background: " bg-indigo-100 dark:bg-black text-gray-900 dark:text-white",
+  },
+
+  background: {
+    elements: "bg-indigo-100 dark:bg-black",
+    section:
+      "mx-auto max-w-2xl p-15 text-center rounded bg-indigo-100 shadow-lg dark:bg-black text-gray-900 dark:text-white",
+  },
+  text: "leading-tight tracking-tight text-gray-900 dark:text-white",
+  highlightText: "leading-tight tracking-tight text-gray-900  dark:text-white",
 };

@@ -58,6 +58,8 @@ export async function POST(req: Request) {
 
     const wordChunks = splitTextByWords(text);
 
+    console.log("wordChunks", wordChunks);
+
     for (let wordChunk of wordChunks) {
       await embedAndStore(sanitizedName, FileId, wordChunk);
     }

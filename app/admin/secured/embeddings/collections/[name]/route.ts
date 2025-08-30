@@ -1,13 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { Qdrant } from "@/lib/RAG/qdrant";
 import { prisma } from "@/lib/prisma";
 
-export async function DELETE(
-  _: Request,
-  { params }: { params: { name: string } },
-) {
+export async function DELETE(request: NextRequest) {
   try {
-    const { name } = params;
+    const name = request.nextUrl.searchParams.get("name");
 
     if (!name) {
       return NextResponse.json(

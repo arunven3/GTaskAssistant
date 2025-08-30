@@ -42,7 +42,7 @@ export const Header = ({ drawerHandler }: { drawerHandler: any }) => (
         </Button>
 
         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-          GTaskAssistant
+          PTaskAssistant
         </span>
       </div>
       <div className="flex items-center lg:order-2">

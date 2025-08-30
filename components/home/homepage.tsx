@@ -15,7 +15,7 @@ export const Homepage = () => {
       <section className={Theme.background.section + " h-screen sm:h-auto"}>
         <h1 className="mb-4 text-3xl font-bold underline underline-offset-4">
           {" "}
-          Welcome to GTaskAssistant
+          Welcome to PTaskAssistant
         </h1>
         <h2 className="mt-10 text-xl font-semibold">
           Think of me as your digital brain helping you stay organized, focused,
@@ -25,7 +25,7 @@ export const Homepage = () => {
           <div className="rounded-xl border p-6 text-center shadow-sm transition hover:shadow-md">
             <h3 className="mb-2 text-lg font-semibold">New Customer</h3>
             <p className="mb-4">
-              Create an account to start using GTaskAssistant.
+              Create an account to start using PTaskAssistant.
             </p>
             <Button
               onClick={() => router.push("/logout")}
