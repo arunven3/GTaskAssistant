@@ -40,28 +40,4 @@ export const BaseTheme = {
   admin: {
     page: { base: "pt-15 md:pl-64 h-screen" },
   },
-  table: {
-    root: {
-      base: "w-full text-left text-sm",
-    },
-    head: {
-      base: "bg-gray-50 text-lg uppercase text-bold",
-      cell: {
-        base: "px-6 py-3",
-      },
-    },
-    body: {
-      base: "divide-y divide-gray-200",
-      row: {
-        base: "bg-grey-800",
-        hovered: "",
-        cell: {
-          base: "px-6 py-4 whitespace-nowrap",
-        },
-      },
-    },
-  },
-  dropdown: {
-    base: "w-48 text-sm",
-  },
 };

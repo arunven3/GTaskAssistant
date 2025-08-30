@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GTaskAssistant",
+  title: "PTaskAssistant",
   description: "AI-powered smart assistant",
 };
 

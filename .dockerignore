@@ -1,0 +1,19 @@
+# Ignore dependencies
+node_modules
+.prisma
+.next
+.next
+.git
+
+# Ignore build output
+dist
+
+# Ignore local dev data
+qdrant_data
+uploads
+
+# Misc
+Dockerfile
+.dockerignore
+npm-debug.log
+.env.local

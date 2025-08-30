@@ -1,6 +1,6 @@
-# **GTaskAssistant** – Agentic AI Powered by Local LLMs + Google APIs.
+# **PTaskAssistant** – Agentic AI Powered by Local LLMs + Google APIs.
 
-**GTaskAssistant** is an **Agentic AI-powered personal assistant** built with **Next.js**, integrating **Google API** , **tool calling**, and **real-time internet search**. Runs on local LLMs and provides streaming responses for a faster & seamless experience.
+**PTaskAssistant** is an **Agentic AI-powered personal assistant** built with **Next.js**, integrating **Google API** , **tool calling**, and **real-time internet search**. Runs on local LLMs and provides streaming responses for a faster & seamless experience.
 
 Can be used as your AI can able to schedule events, manage tasks, fetch real-time info from the web, and chat with advanced open-source models – all in one place.
 
@@ -32,11 +32,11 @@ graph TD
 
 ## ScreenShot
 
-You can see a screenshot of GTaskAssistant below:
+You can see a screenshot of PTaskAssistant below:
 
-![GTaskAssistant Screenshot](./public/Screenshot-1.png)
+![PTaskAssistant Screenshot](./public/Screenshot-1.png)
 
-![GTaskAssistant Screenshot](./public/Screenshot-2.png)
+![PTaskAssistant Screenshot](./public/Screenshot-2.png)
 
 ---
 
@@ -109,7 +109,7 @@ Recommended models in GGUF format (works best with tools and llaama-cpp):
 Place the downloaded `.gguf` files into:
 
 ```
-GTaskAssistant/models/
+PTaskAssistant/models/
 ```
 
 Example:
@@ -176,8 +176,8 @@ Run this commasn from terminal:
 
 - Clone repo:
   ```
-  git clone https://github.com/arunven3/GTaskAssistant.git
-  cd GTaskAssistant
+  git clone https://github.com/arunven3/PTaskAssistant.git
+  cd PTaskAssistant
   ```
 - Install dependencies:
   ```
@@ -198,7 +198,7 @@ Running Local LLM with llama.cpp
 
 ## Coming Soon
 
-Many powerful features are on the way including enhanced agent workflows, smarter task automation, finetuned LLM. Once added, GTaskAssistant will be the ultimate all-in-one AI productivity companion.
+Many powerful features are on the way including enhanced agent workflows, smarter task automation, finetuned LLM. Once added, PTaskAssistant will be the ultimate all-in-one AI productivity companion.
 
 ## Notes
 

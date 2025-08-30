@@ -69,6 +69,7 @@ export const GreyThemeCorlor = {
   adminPage: {
     background: " bg-gray-100 dark:bg-black text-gray-900 dark:text-white",
   },
+
   table: {
     head: {
       cell: {

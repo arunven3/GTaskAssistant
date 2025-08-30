@@ -17,7 +17,7 @@ const getSystemPrompt = (context: string = "") => {
   const prompt = {
     role: "system",
     content: `
-You are a useful AI assistant named "GTaskAssistant". Answer the user's question carefully.
+You are a useful AI assistant named "PTaskAssistant". Answer the user's question carefully.
 Current date: "2025-08-22"
 Timezone: "Asia/Kolkata" (+05:30)
 
