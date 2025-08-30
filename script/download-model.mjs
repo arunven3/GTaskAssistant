@@ -1,4 +1,8 @@
 import { pipeline, env } from "@xenova/transformers";
+import https from "https";
+import fs from "fs";
+import path from "path";
+import { execSync } from "child_process";
 
 env.cacheDir = "./models";
 
