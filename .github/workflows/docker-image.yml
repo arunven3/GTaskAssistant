@@ -31,17 +31,4 @@ jobs:
         env:
           HF_USERNAME: ${{ secrets.HF_USERNAME }}
           IMAGE_NAME: my-task-assistant
-        run: docker build . --file DockerFile --tag $HF_USERNAME/g-task-assistant:latest
-
-      - name: Build Docker image
-        env:
-          HF_USERNAME: ${{ secrets.HF_USERNAME }}
-        run: |
-          docker build . \
-            --file DockerFile \
-            --tag $HF_USERNAME/g-task-assistant:latest
-
-      - name: Push Docker image
-        run: |
-          echo "${{ secrets.HF_TOKEN }}" | docker login --username $HF_USERNAME --password-stdin docker.io
-          docker push $HF_USERNAME/g-task-assistant:latest
+        run: docker build . --file DockerFile
