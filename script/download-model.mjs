@@ -3,8 +3,9 @@ import https from "https";
 import fs from "fs";
 import path from "path";
 import { execSync } from "child_process";
+import { writeFile } from "fs/promises";
 
-env.cacheDir = "./models";
+env.cacheDir = "./resources/models";
 
 async function main() {
   console.log("Downloading Snowflake Arctic Embed model...");
@@ -21,46 +22,22 @@ async function main() {
 
   const url =
     "https://huggingface.co/unsloth/Qwen3-1.7B-GGUF/resolve/main/Qwen3-1.7B-Q6_K.gguf?download=true";
-  const modelsDir = path.join(process.cwd(), "models");
+  const modelsDir = path.join(process.cwd(), "resources", "models");
   const filePath = path.join(modelsDir, "Qwen3-1.7B-Q6_K.gguf");
 
   if (!fs.existsSync(modelsDir)) {
     fs.mkdirSync(modelsDir, { recursive: true });
   }
 
-  const file = fs.createWriteStream(filePath);
-  https
-    .get(url, (response) => {
-      response.pipe(file);
-      file.on("finish", () => {
-        file.close();
-        console.log("Model downloaded to:", filePath);
-      });
-    })
-    .on("error", (err) => {
-      fs.unlink(filePath, () => {}); // Delete partial file on error
-      console.error("Download failed:", err.message);
-    });
+  const response = await fetch(url);
 
-  console.log("Qwen3-1.7B Model downloaded sucesfully");
-
-  const llamaDir = path.join(process.cwd(), "llama.cpp");
-  if (!fs.existsSync(llamaDir)) {
-    console.log("Cloning llama.cpp...");
-    execSync(
-      `git clone https://github.com/ggerganov/llama.cpp.git ${llamaDir}`,
-      { stdio: "inherit" },
-    );
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
   }
 
-  console.log("Building llama.cpp...");
-  execSync(`make -C ${llamaDir}`, { stdio: "inherit" });
-
-  (async () => {
-    await downloadFile(modelUrl, modelPath);
-
-    console.log("Model and llama.cpp ready!");
-  })();
+  const buffer = await response.arrayBuffer();
+  await writeFile(filePath, Buffer.from(buffer));
+  console.log("Model downloaded to:", filePath);
 }
 
 main();
