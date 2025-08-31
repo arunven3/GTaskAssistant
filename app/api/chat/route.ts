@@ -5,7 +5,7 @@ import { getAllMatchingChunks } from "@/lib/RAG/base";
 
 export const runtime = "nodejs";
 
-const LLAMA_URL = "http://127.0.0.1:8080/v1/chat/completions";
+const LLAMA_URL = process.env.LLAMA_SERVER_URL! + "/v1/chat/completions";
 
 const getSystemPrompt = (context: string = "") => {
   let contextPrompt = "";
