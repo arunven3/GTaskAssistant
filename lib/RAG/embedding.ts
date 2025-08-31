@@ -5,7 +5,7 @@ export class TextEmbedder {
 
   private static async getInstance() {
     if (!TextEmbedder.instance) {
-      env.cacheDir = "./models";
+      env.cacheDir = "./resources/models";
 
       TextEmbedder.instance = await pipeline(
         "feature-extraction",
