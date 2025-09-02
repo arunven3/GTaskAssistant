@@ -22,22 +22,33 @@ async function main() {
 
   const url =
     "https://huggingface.co/unsloth/Qwen3-1.7B-GGUF/resolve/main/Qwen3-1.7B-Q6_K.gguf?download=true";
-  const modelsDir = path.join(process.cwd(), "resources", "models");
-  const filePath = path.join(modelsDir, "Qwen3-1.7B-Q6_K.gguf");
+  let modelsDir = path.join(process.cwd(), "resources", "models", "Qwen3");
+  let filePath = path.join(modelsDir, "Qwen3-1.7B-Q6_K.gguf");
 
-  if (!fs.existsSync(modelsDir)) {
-    fs.mkdirSync(modelsDir, { recursive: true });
+  if (process.env.NODE_ENV == "development") {
+    modelsDir = path.join(
+      process.cwd(),
+      "resources",
+      "models",
+      "phi-4-mini-reasoning",
+    );
+
+    filePath = path.join(modelsDir, "phi-4-mini-reasoning_q6_k.guff");
   }
 
-  const response = await fetch(url);
+  if (!fs.existsSync(filePath)) {
+    if (!fs.existsSync(modelsDir)) fs.mkdirSync(modelsDir, { recursive: true });
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const buffer = await response.arrayBuffer();
+    await writeFile(filePath, Buffer.from(buffer));
+    console.log("Model downloaded to:", filePath);
   }
-
-  const buffer = await response.arrayBuffer();
-  await writeFile(filePath, Buffer.from(buffer));
-  console.log("Model downloaded to:", filePath);
 }
 
 main();

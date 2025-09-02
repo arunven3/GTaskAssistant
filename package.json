@@ -10,7 +10,7 @@
     "lint": "next lint",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "postinstall": "node ./script/download-model.mjs"
+    "postinstall": "node --env-file=.env ./script/download-model.mjs"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",

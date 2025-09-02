@@ -6,7 +6,7 @@ COPY script ./script
 RUN apt-get update -y && apt-get install -y openssl && \
     apt-get install -y git wget curl
 
-RUN npm install
+# RUN npm install
 
 COPY . .
 
