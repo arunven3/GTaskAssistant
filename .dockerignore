@@ -13,7 +13,8 @@ qdrant_data
 uploads
 
 # Misc
-Dockerfile
-.dockerignore
+
 npm-debug.log
 .env.local
+
+resources/models/phi-4-mini-reasoning
