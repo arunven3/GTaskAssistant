@@ -1,0 +1,34 @@
+"use client";
+
+import React from "react";
+import { Header } from "@/components/admin-ui/header";
+import { SideNavBar } from "@/components/admin-ui/SideNavBar";
+import { BaseLayout } from "@/components/admin-ui/BaseLayout";
+
+export default function page() {
+  return (
+    <>
+      <div className="grid">
+        <BaseLayout>
+          <div className="bg-gray-100 antialiased dark:bg-gray-900">
+            <main className="h-auto p-4 pt-20">
+              <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="h-32 rounded-lg border-2 border-dashed border-gray-300 md:h-64 dark:border-gray-600"></div>
+                <div className="h-32 rounded-lg border-2 border-dashed border-gray-300 md:h-64 dark:border-gray-600"></div>
+                <div className="h-32 rounded-lg border-2 border-dashed border-gray-300 md:h-64 dark:border-gray-600"></div>
+                <div className="h-32 rounded-lg border-2 border-dashed border-gray-300 md:h-64 dark:border-gray-600"></div>
+              </div>
+              <div className="mb-4 h-96 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600"></div>
+              <div className="mb-4 grid grid-cols-2 gap-4">
+                <div className="h-48 rounded-lg border-2 border-dashed border-gray-300 md:h-72 dark:border-gray-600"></div>
+                <div className="h-48 rounded-lg border-2 border-dashed border-gray-300 md:h-72 dark:border-gray-600"></div>
+                <div className="h-48 rounded-lg border-2 border-dashed border-gray-300 md:h-72 dark:border-gray-600"></div>
+                <div className="h-48 rounded-lg border-2 border-dashed border-gray-300 md:h-72 dark:border-gray-600"></div>
+              </div>
+            </main>
+          </div>
+        </BaseLayout>
+      </div>
+    </>
+  );
+}

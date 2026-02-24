@@ -1,0 +1,34 @@
+name: Build & Push Docker Image to HF Hub
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v2
+
+      - name: Create .env file
+        run: |
+          echo "NEXT_PUBLIC_API_BASE_URL=${{ secrets.HF_TOKEN }}" >> .env
+          echo "NEXT_PUBLIC_AI_NAME=${{ secrets.NEXT_PUBLIC_AI_NAME }}" >> .env
+          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
+          echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> .env
+          echo "GOOGLE_CX=${{ secrets.GOOGLE_CX }}" >> .env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+          echo "QDRANT_URL=${{ secrets.QDRANT_URL }}" >> .env
+          echo "LLAMA_SERVER_URL=${{ secrets.LLAMA_SERVER_URL }}" >> .env
+
+        shell: bash
+
+      - name: Build Docker image
+        env:
+          HF_USERNAME: ${{ secrets.HF_USERNAME }}
+          IMAGE_NAME: my-task-assistant
+        run: docker build . --file DockerFile
